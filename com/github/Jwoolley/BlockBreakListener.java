@@ -11,12 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-// Referenced classes of package com.github.Jwoolley:
-//            DiamondHunter, BroadcastHandler
-
 public class BlockBreakListener
     implements Listener
 {
+    private Date d;
+    private static DiamondHunter dh;
+    private static BroadcastHandler bh;
 
     public BlockBreakListener(DiamondHunter instance, BroadcastHandler instance2)
     {
@@ -60,15 +60,17 @@ public class BlockBreakListener
         {
             Player p = aplayer[i];
             if(p.hasPermission("dh.getnotice") && !bh.containsPlayer(p) && !player.hasPermission("dh.exempt"))
-                p.sendMessage((new StringBuilder()).append(ChatColor.GOLD).append(dh.getConfig().getString("Tag")).append(" ").append(player.getDisplayName()).append(" ").append(color).append(dh.getConfig().getString((new StringBuilder(String.valueOf(block))).append("Message").toString())).append(" X: ").append(b.getX()).append(" Y: ").append(b.getY()).append(" Z: ").append(b.getZ()).toString());
+            {
+                p.sendMessage(ChatColor.GOLD + dh.getConfig().getString("Tag") + " " + player.getDisplayName() + " " + color + dh.getConfig().getString(block + "Message") + " X: " + b.getX + " Y: " + b.getY() + " Z: " + b.getZ();
+            }
         }
 
         if(!player.hasPermission("dh.exempt") && dh.getConfig().getBoolean("LogToFile"))
         {
             d.setTime(System.currentTimeMillis());
             World w = b.getWorld();
-            String details = (new StringBuilder("[")).append(d).append("]").append(" ").append(player.getName()).append(" ").append(dh.getConfig().getString((new StringBuilder(String.valueOf(block))).append("Message").toString())).append(" X: ").append(b.getX()).append(" Y: ").append(b.getY()).append(" Z: ").append(b.getZ()).toString();
-            String f = (new StringBuilder(String.valueOf(w.getName()))).append(".txt").toString();
+            String details = "["+ d + "]"+ " " + player.getName() + " " + dh.getConfig().getString(block + "Message") + " X: " + b.getX() + " Y: " + b.getY() + " Z: " + b.getZ();
+            String f = w.getName() + ".txt";
             logToFile(details, f);
         }
     }
@@ -93,8 +95,4 @@ public class BlockBreakListener
             e.printStackTrace();
         }
     }
-
-    private Date d;
-    private static DiamondHunter dh;
-    private static BroadcastHandler bh;
 }
