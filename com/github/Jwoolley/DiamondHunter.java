@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class DiamondHunter extends JavaPlugin{
 	
-	private BroadcastHandler bh = new BroadcastHandler();
+    private BroadcastHandler bh = new BroadcastHandler();
 
     public void onEnable()
     {
