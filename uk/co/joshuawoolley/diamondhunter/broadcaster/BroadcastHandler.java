@@ -29,9 +29,35 @@ public class BroadcastHandler {
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 			if(p.hasPermission("dh.getnotice")) {
 				if(!disabled.contains(p.getName())){
+					if(b.getY() > 63) return;
+
 					String blockName = b.getType().toString().toLowerCase().replace("_", " ");
 					String tag = dh.messageData.get("tag");
 					String message = dh.messageData.get("adminNotice");
+
+					switch (blockName){
+						case "coal ore":
+							blockName = "煤礦";
+							break;
+						case "iron ore":
+							blockName = "鐵礦";
+							break;
+						case "gold ore":
+							blockName = "金礦";
+							break;
+						case "lapis ore":
+							blockName = "青金石礦";
+							break;
+						case "diamond ore":
+							blockName = "鑽石礦";
+							break;
+						case "emerald ore":
+							blockName = "綠寶石礦";
+							break;
+						default:
+							break;
+					}
+
 					if (message.contains("%player")) {
 						message = message.replace("%player", player);
 					}
